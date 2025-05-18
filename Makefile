@@ -3,7 +3,7 @@ VERSION ?= $(shell git rev-parse --short HEAD)
 GO?=$(shell which go)
 export GOBIN := $(BIN)
 export PATH := $(BIN):$(PATH)
-
+export VERSION := $(VERSION)
 BUILD_CMD := $(GO) install -ldflags "-X main.build=${VERSION}"
 
 .PHONY: build/docker
@@ -43,8 +43,15 @@ lint: $(BIN)/golangci-lint
 
 .PHONY: run
 run: build/docker
-	docker run --env-file ./.env -p 3010:3010 -d --name verifier-backend polygonid/verifier-backend:$(VERSION)
+	docker run --env-file ./.env -p 3010:3010 -d --name verifier-backend polygonid/verifier-backend:$(VERSION) -v ./resolvers_settings.yaml:/resolvers_settings.yaml
 
+.PHONY: compose-up
+compose-up: build/docker
+	docker compose up -d
+
+.PHONY: compose-down
+compose-down:
+	docker compose down
 
 .PHONY: stop
 stop:

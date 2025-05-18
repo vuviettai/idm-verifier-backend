@@ -1,0 +1,11 @@
+services:
+  verifier:
+    image: polygonid/verifier-backend:${VERSION}
+    container_name: idm-verifier
+    ports:
+      - "3010:3010"
+    env_file:
+      - .env
+    volumes:
+      - ./resolvers_settings.yaml:/resolvers_settings.yaml
+    #entrypoint: sleep infinity

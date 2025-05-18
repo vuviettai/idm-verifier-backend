@@ -21,6 +21,7 @@ import (
 	"github.com/0xPolygonID/verifier-backend/internal/config"
 	"github.com/0xPolygonID/verifier-backend/internal/errors"
 	"github.com/0xPolygonID/verifier-backend/internal/loader"
+	"github.com/0xPolygonID/verifier-backend/internal/resolver"
 )
 
 func main() {
@@ -87,9 +88,17 @@ func parseResolverSettings(ctx context.Context, rs config.ResolverSettings) (map
 	for chainName, chainSettings := range rs {
 		for networkName, networkSettings := range chainSettings {
 			prefix := fmt.Sprintf("%s:%s", chainName, networkName)
-			resolver := state.NewETHResolver(networkSettings.NetworkURL, networkSettings.ContractAddress)
-			resolvers[prefix] = resolver
 
+			if networkSettings.Method == "fabric" {
+				resolver, err := resolver.NewFabricResolver(networkSettings)
+				if err != nil {
+					return nil, nil, err
+				}
+				resolvers[prefix] = resolver
+			} else {
+				resolver := state.NewETHResolver(networkSettings.NetworkURL, networkSettings.ContractAddress)
+				resolvers[prefix] = resolver
+			}
 			//if err := registerCustomDIDMethod(ctx, chainName, networkName, networkSettings); err != nil {
 			//	log.Error(ctx, "cannot register custom DID method", "err", err)
 			//	return nil, nil, err

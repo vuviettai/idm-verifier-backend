@@ -1,41 +1,31 @@
 <!doctype html>
 <html>
+
 <head>
     <title>Privado ID - Verifier API</title>
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <script type="module" src="https://unpkg.com/rapidoc/dist/rapidoc-min.js"></script>
 </head>
-<body>
-<rapi-doc
-        id = "the-doc"
-        spec-url="/static/docs/api/api.yaml"
-        theme = "light"
-        primary-color = "#93f598"
-        allow-spec-url-load = false
-        allow-spec-file-load = false
-        show-header = false
-        render-style = "focused"
-        layout = "row"
-        allow-authentication = true
-        sort-endpoints-by="summary"
->
-    <img
-            slot="nav-logo"
-            src="https://docs.privado.id/img/privado_logo.svg"
-            width="100px"
-            height="100px"
-    />
-</rapi-doc>
 
-<script>
-    window.addEventListener('DOMContentLoaded', () => {
-        const rapidocEl = document.getElementById('the-doc');
-        rapidocEl["server-url"] = globalThis.origin;
-        rapidocEl.addEventListener('spec-loaded', () => {
-            rapidocEl.setApiServer(globalThis.origin);
+<body>
+    <rapi-doc id="the-doc" spec-url="/static/docs/api/api.yaml" theme="light" primary-color="#93f598"
+        allow-spec-url-load=false allow-spec-file-load=false show-header=false render-style="focused" layout="row"
+        allow-authentication=true sort-endpoints-by="summary">
+        <img slot="nav-logo"
+            src="https://cdn.prod.website-files.com/651b890309ecde5f8bad7a2b/6527982d113dca1afff54701_full%20main%20logo_dark.svg"
+            width="100px" height="100px" />
+    </rapi-doc>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const rapidocEl = document.getElementById('the-doc');
+            rapidocEl["server-url"] = globalThis.origin;
+            rapidocEl.addEventListener('spec-loaded', () => {
+                rapidocEl.setApiServer(globalThis.origin);
+            });
         });
-    });
-</script>
+    </script>
 </body>
+
 </html>
